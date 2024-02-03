@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Assignment Project</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="navbar menu navbar-expand-lg">
+                        <h2><a class="navbar-brand" href="/">Assignment Project</a></h2>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="menulist collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav ml-auto menu-list">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/">Home</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/file-create">File Create</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/file-upload">File Upload</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/contact">Contact</a>
+                                </li>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/about">About</a>
+                                </li>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section id="about">
+            <h2 class="text-primary text-center mt-5">About the Assignment project</h2>
+            <p class="text-center ">In this assignment, I will build a server using NodeJs. My server will listen
+                on port 5500.</p>
+            <div class="row">
+                <div class="col-12">
+                    <p>The Node.js application is a simple web server designed to meet specific requirements. It
+                        utilizes the http module to create an HTTP server that listens on port 5500. The server has a
+                        basic routing system that handles different URL paths and generates dynamic HTML content for
+                        each page.</p>
+
+                    <p>The application includes the following features:</p>
+
+                    <ol>
+                        <li><strong>Home Page (/):</strong> Displays a message indicating that it is the Home Page.</li>
+                        <li><strong>About Page (/about):</strong> Displays a message indicating that it is the About
+                            Page.</li>
+                        <li><strong>Contact Page (/contact):</strong> Displays a message indicating that it is the
+                            Contact Page.</li>
+                        <li><strong>File Write Page (/file-write):</strong> Creates a file named "demo.txt" and writes
+                            the text "hello world" into it.</li>
+                        <li><strong>File Upload Page (/file-upload):</strong> Provides a placeholder for file upload
+                            functionality using the Multer middleware. Users can customize this page to handle file
+                            uploads as needed.</li>
+                    </ol>
+
+                    <p>The application dynamically generates HTML content based on the requested URL, and a common menu
+                        is included on each page for navigation. The HTML content is sent to the client as the server's
+                        response, providing a simple and functional web server with routing capabilities.</p>
+
+
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <h3>About Us</h3>
+                    <p>Our mission is to provide the best education opportunities for university students, job holders,
+                        job seekers, and freelancers who want to learn or develop skills from the best instructors.</p>
+                </div>
+                <div class="col-4">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li>Email: mdkamalhosennn@gmail.com</li>
+                        <li>Phone: +9766425523</li>
+                        <li>Address: Doha, Qatar</li>
+                    </ul>
+                </div>
+                <div class="col-4">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="text-center m-2">Copyright ℗ 2024 by XovenTech Dev</p>
+        </div>
+    </footer>
+</body>
+
+</html>
