@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Assignment Project</title>
+    <title>File Create - Assignment Project</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -58,19 +58,19 @@
             <div class="row justify-content-center">
                 <div class="col-sm-10 col-md-8 col-lg-6">
 
-                    <div class="alert alert-<%= status %>" role="alert">
-                        <%= text %>
+                    <div class="alert" role="alert">
+
                     </div>
-                    <form action="createFile" method="post">
+                    <form id="createFile" method="post">
                         <div class="form-group">
                             <label for="createFile">File Name</label>
-                            <input type="text" class="form-control" name="fileName" placeholder="Enter file name">
+                            <input type="text" class="form-control" id="fileName" placeholder="Enter file name">
                         </div>
                         <div class="form-group">
                             <label for="createData">Data for file</label>
-                            <input type="text" class="form-control" name="fileContent" placeholder="Enter file data">
+                            <input type="text" class="form-control" id="fileContent" placeholder="Enter file data">
                         </div>
-                        <button type="submit" class="btn btn-primary">Create File</button>
+                        <button type="submit" class="btn btn-primary mt-1">Create File</button>
                     </form>
                 </div>
             </div>
@@ -82,6 +82,34 @@
             <div class="row justify-content-center">
                 <div class="col-sm-10 col-md-8 col-lg-6">
 
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Number</th>
+                                <th scope="col">File Name</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% let file_number=1; %>
+                                <% files.forEach(file=> { %>
+                                    <tr>
+                                        <td>
+                                            <%= file_number %>
+                                        </td>
+                                        <td>
+                                            <%= file %>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-primary" href="/file-view?fileName=<%= file %>">View</a>
+                                            <a class="btn btn-warning"
+                                                href="/fileDelete?fileName=<%= file %>">Delete</a>
+                                        </td>
+                                    </tr>
+                                    <% file_number++; %>
+                                        <% }); %>
+                        </tbody>
+                    </table>
 
 
                 </div>
@@ -122,6 +150,45 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
         crossorigin="anonymous"></script>
+    <script>
+
+        let fileCreate = document.querySelector('#createFile');
+        let notices = document.querySelector('.alert');
+
+        fileCreate.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let fileName = document.querySelector('#fileName').value;
+            let fileContent = document.querySelector('#fileContent').value;
+
+            if (fileContent === '' || fileName === '') {
+                notices.innerHTML = 'Please fill all the fields';
+                notices.classList.add('alert-warning');
+                return;
+
+            } else {
+                fetch('/createFile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fileName: fileName,
+                        fileContent: fileContent
+                    })
+                })
+                    .then(res => res.json())
+                    .then(response => {
+                        notices.textContent = response.text;
+                        notices.classList.add('alert-' + response.status + '');
+                        if (response.status == 'success') {
+                            location.reload();
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+
+    </script>
 </body>
 
 </html>

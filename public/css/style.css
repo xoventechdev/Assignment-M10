@@ -21,11 +21,6 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* background: linear-gradient(to right, rgb(0, 168, 523), #fff 35%, #e00a95); */
-    /* background:
-        linear-gradient(150deg, #ecedee, transparent 30%),
-        linear-gradient(330deg, rgb(210, 206, 242), transparent 30%),
-        linear-gradient(225deg, #fff0be, #fbdce7, #e2fae1, powderblue); */
         background: linear-gradient(to right, #80BCBD, #AAD9BB , #D5F0C1);
 
     animation: gradient 3s linear infinite;
@@ -38,30 +33,6 @@ body::before {
     100% { opacity: 0; }
 }
 
-
-
-
-/* 
-body {
-    font-family: Tahoma, sans-serif;
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
-    background:
-        linear-gradient(150deg, #ecedee, transparent 30%),
-        linear-gradient(330deg, rgb(210, 206, 242), transparent 30%),
-        linear-gradient(225deg, #fff0be, #fbdce7, #e2fae1, powderblue);
-        background: linear-gradient(to right, rgb(0, 168, 523), #fff 35%, #e00a95);
-
-    animation: gradient 3s linear infinite;
-
-}
-
-@keyframes gradient {
-    0% {background-position: 0% 75%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 70%;}
-} */
 
 p {
     font-size: 20px;
@@ -109,7 +80,7 @@ header {
     font-weight: 700;
     color: var(--app--secondary--color);
     text-shadow: 
-    0px 0px 50px var(--app--secondary--color);
+    0px 0px 5px var(--app--secondary--color);
 }
 
 .menu h2 a:hover {
@@ -134,3 +105,4 @@ footer a {
 footer a:hover {
     color: var(--app--secondary--color);
 }
+

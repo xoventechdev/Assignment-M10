@@ -10,6 +10,7 @@ router.get('/about', controller.getAbout);
 
 
 router.post('/createFile', controller.createFile);
+router.get('/fileDelete', controller.deleteFile);
 
 
 module.exports = router
