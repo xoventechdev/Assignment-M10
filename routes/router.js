@@ -8,9 +8,10 @@ router.get('/file-upload', controller.getFileUpload);
 router.get('/contact', controller.getContact);
 router.get('/about', controller.getAbout);
 
-
 router.post('/createFile', controller.createFile);
 router.get('/fileDelete', controller.deleteFile);
+router.post('/uploadMulter', controller.uploadMulter);
+router.post('/uploadFileforge', controller.uploadFileforge);
 
 
 module.exports = router

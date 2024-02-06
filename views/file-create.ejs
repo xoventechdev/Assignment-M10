@@ -29,7 +29,7 @@
                                     <a class="nav-link" href="/">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/file-create">File Create</a>
+                                    <a class="nav-link menuActive" href="/file-create">File Create</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/file-upload">File Upload</a>
@@ -61,17 +61,17 @@
                     <div class="alert" role="alert">
 
                     </div>
-                    <form id="createFile" method="post">
-                        <div class="form-group">
-                            <label for="createFile">File Name</label>
-                            <input type="text" class="form-control" id="fileName" placeholder="Enter file name">
-                        </div>
-                        <div class="form-group">
-                            <label for="createData">Data for file</label>
-                            <input type="text" class="form-control" id="fileContent" placeholder="Enter file data">
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-1">Create File</button>
-                    </form>
+                    <div class="form-group">
+                        <label for="fileName">File Name</label>
+                        <input type="text" class="form-control" id="fileName" placeholder="Enter file name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fileContent">Data for file</label>
+                        <input type="text" class="form-control" id="fileContent" placeholder="Enter file data">
+                    </div>
+                    <button type="button" id="createFile" onclick="createFiles()" class="btn btn-primary mt-1">Create
+                        File</button>
+
                 </div>
             </div>
         </section>
@@ -101,9 +101,9 @@
                                             <%= file %>
                                         </td>
                                         <td>
-                                            <a class="btn btn-primary" href="/file-view?fileName=<%= file %>">View</a>
-                                            <a class="btn btn-warning"
-                                                href="/fileDelete?fileName=<%= file %>">Delete</a>
+                                            <button class="btn btn-warning" id="deleteBtn" data-file="<%= file %>"
+                                                type="button">Delete</button>
+                                            <a class="btn btn-primary" href="../files/<%= file %>">View</a>
                                         </td>
                                     </tr>
                                     <% file_number++; %>
@@ -152,11 +152,32 @@
         crossorigin="anonymous"></script>
     <script>
 
-        let fileCreate = document.querySelector('#createFile');
         let notices = document.querySelector('.alert');
 
-        fileCreate.addEventListener('submit', (e) => {
-            e.preventDefault();
+        let deleteBtn = document.getElementById('deleteBtn');
+
+
+        deleteBtn.addEventListener('click', async () => {
+            deleteData();
+        });
+
+        async function deleteData() {
+            let fileToDelete = deleteBtn.getAttribute('data-file');
+            const url = '/fileDelete?fileName=' + fileToDelete;
+
+            const fetchData = await fetch(url);
+            let data = await fetchData.json();
+
+            if (data.status == 'success') {
+                notices.innerHTML = `<div class="alert alert-success">${data.text}</div>`;
+                location.reload();
+            } else {
+                notices.innerHTML = `<div class="alert alert-danger">${data.text}</div>`;
+            }
+        }
+
+
+        function createFiles() {
             let fileName = document.querySelector('#fileName').value;
             let fileContent = document.querySelector('#fileContent').value;
 
@@ -164,29 +185,29 @@
                 notices.innerHTML = 'Please fill all the fields';
                 notices.classList.add('alert-warning');
                 return;
-
-            } else {
-                fetch('/createFile', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        fileName: fileName,
-                        fileContent: fileContent
-                    })
-                })
-                    .then(res => res.json())
-                    .then(response => {
-                        notices.textContent = response.text;
-                        notices.classList.add('alert-' + response.status + '');
-                        if (response.status == 'success') {
-                            location.reload();
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
             }
-        });
+
+            fetch('/createFile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fileName: fileName,
+                    fileContent: fileContent
+                })
+            })
+                .then(res => res.json())
+                .then(response => {
+                    notices.textContent = response.text;
+                    notices.classList.add('alert-' + response.status);
+                    if (response.status == 'success') {
+                        location.reload();
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
 
     </script>
 </body>

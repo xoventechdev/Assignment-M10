@@ -106,3 +106,8 @@ footer a:hover {
     color: var(--app--secondary--color);
 }
 
+.menuActive {
+    color: white !important;
+    background-color: var(--app--primary--color) !important;
+}
+
