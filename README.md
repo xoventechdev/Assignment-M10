@@ -28,7 +28,8 @@ This is a simple Express.js application designed to fulfill various requirements
 ## Getting Started:
 
 1. **Installation**:
-       ```bash
+
+   
            npm install
 
 
