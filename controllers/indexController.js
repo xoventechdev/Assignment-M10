@@ -6,21 +6,24 @@ exports.getHome = (req, res) => {
     res.render('../views/index');
 }
 
+
 exports.getFileCreate = (req, res) => {
-
-    let imageList = null;
-
+    const allowedExtensions = ['txt', 'html', 'css', 'js', 'php'];
     fs.readdir('./res/', function(err, files) {
         if (err) {
             console.error(err);
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end('Internal Server Error');
         } else {
-            imageList = files;
-            res.render('../views/file-create', { text: '', status: '', files: imageList });
+            const filteredFiles = files.filter(file => {
+                const fileExtension = file.split('.').pop().toLowerCase();
+                return allowedExtensions.includes(fileExtension);
+            });
+            res.render('../views/file-create', { text: '', status: '', files: filteredFiles });
         }
     });
-}
+};
+
 
 exports.getFileUpload = (req, res) => {
 
@@ -65,24 +68,45 @@ exports.getAbout = (req, res) => {
 }
 
 
+
 exports.createFile = (req, res) => {
- 
-        const fileName = req.body.fileName;
-        const fileContent = req.body.fileContent;
+    const fileName = req.body.fileName;
+    const fileContent = req.body.fileContent;
 
-        fs.writeFile('./res/' + fileName, fileContent,function (err){
-            if (err) {
-                res.send({text: `The file ${fileName} is not created`,
-                status: 'warning'})
-            }else {
-                res.send({text: `The file ${req.body.fileName} has been created`,
-                status: 'success'})
-            }
+    let fileExtension = '';
+    const lastDotIndex = fileName.lastIndexOf('.');
+    if (lastDotIndex !== -1) {
+        fileExtension = fileName.slice(lastDotIndex + 1).toLowerCase();
+    } else {
+        return res.send({
+            text: 'File extension is missing',
+            status: 'warning'
         });
+    }
 
-        
- 
+    const allowedExtensions = ['txt', 'html', 'css', 'js', 'php'];
+    if (!allowedExtensions.includes(fileExtension)) {
+        return res.send({
+            text: `File extension "${fileExtension}" is not allowed`,
+            status: 'warning'
+        });
+    }
+
+    fs.writeFile('./res/' + fileName, fileContent, function(err) {
+        if (err) {
+            return res.send({
+                text: `The file ${fileName} is not created`,
+                status: 'warning'
+            });
+        } else {
+            return res.send({
+                text: `The file ${req.body.fileName} has been created`,
+                status: 'success'
+            });
+        }
+    });
 };
+
 
 exports.deleteFile = (req, res) => {
     const fileName = req.query.fileName;
